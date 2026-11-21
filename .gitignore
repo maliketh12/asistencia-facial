@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+data/personas.json
+data/asistencia.csv
+data/notificaciones.log
+.DS_Store

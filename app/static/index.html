@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pase de lista con reconocimiento facial</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Pase de lista</h1>
+    <p id="fecha" class="fecha"></p>
+  </header>
+
+  <main class="layout">
+    <section class="camara" aria-labelledby="t-camara">
+      <h2 id="t-camara" class="sr-only">Cámara</h2>
+
+      <div class="marco" id="marco">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+        <p class="marco-vacio" id="marcoVacio">La cámara está apagada</p>
+      </div>
+
+      <p id="estado" class="estado" role="status" aria-live="polite">Enciende la cámara para empezar.</p>
+
+      <div class="acciones">
+        <button id="btnCamara" class="btn">Encender cámara</button>
+        <button id="btnEscaneo" class="btn principal" disabled>Iniciar pase de lista</button>
+      </div>
+
+      <details class="registro" id="registro">
+        <summary>Registrar una persona</summary>
+        <div class="registro-form">
+          <label>Nombre completo
+            <input id="inNombre" type="text" maxlength="60" autocomplete="off">
+          </label>
+          <label>Contacto del padre, madre o supervisor
+            <input id="inContacto" type="text" maxlength="80" placeholder="correo o teléfono (opcional)" autocomplete="off">
+          </label>
+          <div class="acciones">
+            <button id="btnCapturar" class="btn" disabled>Guardar foto desde la cámara</button>
+            <label class="btn archivo">Subir foto
+              <input id="inArchivo" type="file" accept="image/*" hidden>
+            </label>
+          </div>
+          <p class="ayuda">Guarda 3 o 4 fotos por persona, con distintos ángulos y luz, para mejorar el reconocimiento.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="lista" aria-labelledby="t-lista">
+      <div class="lista-cabecera">
+        <h2 id="t-lista">Asistencia de hoy</h2>
+        <p id="contador" class="contador">0 de 0 presentes</p>
+      </div>
+
+      <ol id="listaPersonas" class="personas"></ol>
+      <p id="listaVacia" class="vacio" hidden>Todavía no hay personas registradas. Abre “Registrar una persona” para agregar la primera.</p>
+
+      <div class="acciones pie">
+        <button id="btnCerrar" class="btn principal">Cerrar lista y avisar ausentes</button>
+        <a class="btn" href="/api/attendance/export" download>Descargar CSV</a>
+        <button id="btnReiniciar" class="btn suave">Reiniciar hoy</button>
+      </div>
+
+      <div id="avisos" class="avisos" hidden>
+        <h3>Avisos enviados (simulados)</h3>
+        <ul id="avisosLista"></ul>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="alert" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
